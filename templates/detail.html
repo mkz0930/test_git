@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="panel">
+  <h2>{{ note["title"] }}</h2>
+  <div class="note-meta">创建于 {{ note["created_at"] }} · 更新于 {{ note["updated_at"] }}</div>
+  {% if note["tags"] %}
+    <div>
+      {% for tag in note["tags"].split(",") %}
+        {% if tag.strip() %}<span class="tag-badge">{{ tag.strip() }}</span>{% endif %}
+      {% endfor %}
+    </div>
+  {% endif %}
+  <p class="note-content">{{ note["content"] }}</p>
+  <div class="note-actions">
+    <a class="button-link" href="/">返回列表</a>
+    <a class="button-link secondary" href="/notes/{{ note['id'] }}/edit">编辑</a>
+    <form method="post" action="/notes/{{ note['id'] }}/delete">
+      <button type="submit" class="danger">删除</button>
+    </form>
+  </div>
+</section>
+{% endblock %}

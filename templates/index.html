@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="panel">
+  <h2>新增知识卡片</h2>
+  <form method="post" action="/notes">
+    <label for="title">标题</label>
+    <input id="title" type="text" name="title" placeholder="比如：Python 异步设计" required />
+
+    <label for="content">内容</label>
+    <textarea id="content" name="content" placeholder="记录你的想法、代码片段或链接" required></textarea>
+
+    <label for="tags">标签</label>
+    <input id="tags" type="text" name="tags" placeholder="比如：python,asyncio" />
+
+    <button type="submit">保存到外挂大脑</button>
+  </form>
+</section>
+
+<section class="panel">
+  <h2>快速检索</h2>
+  <form method="get" action="/" class="search-bar">
+    <input type="text" name="q" placeholder="搜索标题 / 内容 / 标签" value="{{ query }}" />
+    <button type="submit" class="secondary">搜索</button>
+  </form>
+</section>
+
+<section class="panel">
+  <h2>知识卡片</h2>
+  {% if notes %}
+  <div class="notes-grid">
+    {% for note in notes %}
+      <article class="note-card">
+        <h3>{{ note["title"] }}</h3>
+        <div class="note-meta">更新于 {{ note["updated_at"] }}</div>
+        <p>{{ note["content"][:120] }}{% if note["content"]|length > 120 %}...{% endif %}</p>
+        {% if note["tags"] %}
+          <div>
+            {% for tag in note["tags"].split(",") %}
+              {% if tag.strip() %}<span class="tag-badge">{{ tag.strip() }}</span>{% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+        <div class="note-actions">
+          <a class="button-link" href="/notes/{{ note['id'] }}">查看</a>
+          <a class="button-link secondary" href="/notes/{{ note['id'] }}/edit">编辑</a>
+          <form method="post" action="/notes/{{ note['id'] }}/delete">
+            <button type="submit" class="danger">删除</button>
+          </form>
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="empty">还没有内容，先记录第一条知识吧！</p>
+  {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ title if title else "外挂大脑知识库" }}</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>外挂大脑</h1>
+      <p class="subtitle">把零散想法沉淀为可检索的个人知识库</p>
+    </header>
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+    <footer>Made with FastAPI + SQLite</footer>
+  </body>
+</html>

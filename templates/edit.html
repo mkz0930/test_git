@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="panel">
+  <h2>编辑知识卡片</h2>
+  <form method="post" action="/notes/{{ note['id'] }}/edit">
+    <label for="title">标题</label>
+    <input id="title" type="text" name="title" value="{{ note['title'] }}" required />
+
+    <label for="content">内容</label>
+    <textarea id="content" name="content" required>{{ note['content'] }}</textarea>
+
+    <label for="tags">标签</label>
+    <input id="tags" type="text" name="tags" value="{{ note['tags'] }}" />
+
+    <div class="note-actions">
+      <button type="submit">保存修改</button>
+      <a class="button-link secondary" href="/notes/{{ note['id'] }}">取消</a>
+    </div>
+  </form>
+</section>
+{% endblock %}
